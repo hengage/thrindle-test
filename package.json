@@ -2,15 +2,22 @@
   "name": "thrindle_test",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.js",
+  "main": "api/server.ts",
   "scripts": {
+    "dev-start": "nodemon --watch api/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc",
     "test": "npm run test"
   },
   "author": "hengage",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }
