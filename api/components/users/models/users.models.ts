@@ -10,7 +10,7 @@ const userSchema = new Schema<IUser>(
         default: () => stringUtils.generateUniqueString(4) },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
+    phoneNumber: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     email: { type: String, required: true },
     bankVerificationNumber: {type: String, default: null},
