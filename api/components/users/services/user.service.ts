@@ -9,6 +9,7 @@ class UsersService {
                 firstName: payload.firstName,
                 lastName: payload.lastName,
                 phoneNumber: payload.phoneNumber,
+                email: payload.email,
                 password: payload.password,
             })
 
