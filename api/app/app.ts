@@ -1,5 +1,6 @@
 import { Server } from "http";
 import express, { Express, Request, Response } from "express";
+import { dbConfig } from "../config";
 
 class App {
   public app: Express;
@@ -7,6 +8,7 @@ class App {
   constructor() {
     this.app = express();
 
+    this.connectToDB();
     this.initializeMiddleware();
     this.initializeRoutes();
   }
@@ -15,6 +17,15 @@ class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
   }
+
+  private connectToDB = async () => {
+    try {
+      await dbConfig.connect();
+      console.log("conected to db");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   public initializeRoutes() {
     this.app.get("/", (req: Request, res: Response) => {
