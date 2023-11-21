@@ -9,6 +9,7 @@ export interface IUser extends Document {
     email: string | null;
     bankVerificationNumber: string | null;
     transactionPin: string | null;
+    accountStatus: string;
   }
 
   export interface ICreateuser {
