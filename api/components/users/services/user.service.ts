@@ -1,3 +1,4 @@
+import { HandleException } from "../../../utils";
 import { User } from "../models/users.models";
 import { ICreateuser, IUser } from "../users.interface";
 
@@ -14,8 +15,7 @@ class UsersService {
             const newUser = await user.save()
             return newUser
         } catch (error: any) {
-            console.error(error)
-            return error
+            throw new HandleException(error.status, error.message)
         }
     }
 }

@@ -1,6 +1,7 @@
 import { Server } from "http";
 import express, { Express, Request, Response } from "express";
 import { dbConfig } from "../config";
+import { centralErrorHandler } from "../middleware";
 
 class App {
   public app: Express;
@@ -11,6 +12,7 @@ class App {
     this.connectToDB();
     this.initializeMiddleware();
     this.initializeRoutes();
+    this.handleErrorsCentally()
   }
 
   private initializeMiddleware() {
@@ -31,6 +33,13 @@ class App {
     this.app.get("/", (req: Request, res: Response) => {
       res.send("Thrindle test app");
     });
+  }
+
+  private handleErrorsCentally() {
+    this.app.use(
+        centralErrorHandler.handle404Error,
+        centralErrorHandler.handle404OrServerError
+      );
   }
 
   public listenToPort(port: string | number, node_env: string): Server {
