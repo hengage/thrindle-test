@@ -10,3 +10,10 @@ export interface IUser extends Document {
     bankVerificationNumber: string | null;
     transactionPin: string | null;
   }
+
+  export interface ICreateuser {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    password: string;
+  }
