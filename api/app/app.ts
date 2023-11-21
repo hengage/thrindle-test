@@ -2,6 +2,7 @@ import { Server } from "http";
 import express, { Express, Request, Response } from "express";
 import { dbConfig } from "../config";
 import { centralErrorHandler } from "../middleware";
+import { routes } from "../routes";
 
 class App {
   public app: Express;
@@ -33,6 +34,8 @@ class App {
     this.app.get("/", (req: Request, res: Response) => {
       res.send("Thrindle test app");
     });
+
+    this.app.use('/api', routes.router)
   }
 
   private handleErrorsCentally() {

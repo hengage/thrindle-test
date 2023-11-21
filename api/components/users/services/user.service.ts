@@ -3,7 +3,7 @@ import { User } from "../models/users.models";
 import { ICreateuser, IUser } from "../users.interface";
 
 class UsersService {
-    public async createUser(payload: ICreateuser): Promise<IUser> {
+    public async signup(payload: ICreateuser): Promise<IUser> {
         try {
             const user = new User({
                 firstName: payload.firstName,

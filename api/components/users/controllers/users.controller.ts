@@ -3,9 +3,9 @@ import { usersService } from "../services/user.service";
 import { STATUS_CODES } from "../../../utils";
 
 class UsersController {
-  public async createUser(req: Request, res: Response) {
+  public async signup(req: Request, res: Response) {
     try {
-      const user = await usersService.createUser(req.body);
+      const user = await usersService.signup(req.body);
       res.status(STATUS_CODES.CREATED).json({
         message: "User created successfully",
         data: {
