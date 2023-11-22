@@ -6,11 +6,17 @@ import { DateTime } from "luxon";
 import { JWT_SECRET_KEY } from "../config";
 
 class StringUtils {
+  private timestamp: Number;
+
+  constructor() {
+    this.timestamp = DateTime.now().toUnixInteger();
+  }
   public generateUniqueString(length: number) {
     const randomBytes = crypto.randomBytes(Math.ceil(length / 2));
     const hexString = randomBytes.toString("hex").slice(0, length);
-    const timestamp = DateTime.now().toUnixInteger().toString().substring(6);
-    const uniqueString = `${hexString}${timestamp}`;
+    const uniqueString = `${hexString}${this.timestamp
+      .toString()
+      .substring(6)}`;
     return uniqueString;
   }
 
@@ -19,9 +25,10 @@ class StringUtils {
   }
 
   public generateTxRef(): string {
-    const timestamp = DateTime.now().toUnixInteger();
     const randomBytes = crypto.randomBytes(11);
-    const txRef = `${randomBytes}_${timestamp}`;
+    const txRef = `${randomBytes}_${this.timestamp}`
+    console.log({ txRef });
+    
     return txRef;
   }
 }
