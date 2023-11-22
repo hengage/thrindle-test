@@ -67,5 +67,27 @@ class UsersService {
       throw new HandleException(error.status, error.message);
     }
   }
+
+  public async getUserById(
+    userId: string,
+    selectFields?: string
+  ): Promise<IUser> {
+    try {
+      const query = User.findById(userId)
+
+      if (selectFields) {
+        query.select(selectFields);
+      }
+      const user = await query.lean().exec()
+
+      if (!user) {
+        throw new HandleException(STATUS_CODES.NOT_FOUND, "User not found");
+      }
+
+      return user;
+    } catch (error: any) {
+      throw new HandleException(error.status, error.message);
+    }
+  }
 }
 export const usersService = new UsersService();

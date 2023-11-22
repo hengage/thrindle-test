@@ -1,13 +1,20 @@
 import { Request, Response } from "express";
+
 import { transactionService } from "../services/transaction.service";
 import { STATUS_CODES } from "../../../utils";
+import { usersService } from "../../users";
 
 class TransactionController {
   public async oneTimeAccountPayment(req: Request, res: Response) {
-    const { email, amount } = req.body;
+    const { userId } = req.params;
     try {
+      const user = await usersService.getUserById(userId, "email");
+
       const dynamicVirtualAccount =
-        await transactionService.oneTimeAccountPayment(email, amount);
+        await transactionService.oneTimeAccountPayment(
+          user.email,
+          req.body.amount
+        );
       res.status(STATUS_CODES.CREATED).json({
         message: "Account created",
         data: dynamicVirtualAccount,
