@@ -19,3 +19,8 @@ export interface IUser extends Document {
     email: string;
     password: string;
   }
+
+  export interface ILoginUser {
+    phoneNumber: string;
+    password: string;
+  }

@@ -10,6 +10,7 @@ class UsersRoutes {
 
   public initializeRoutes() {
     this.router.post(`/signup`, usersController.signup);
+    this.router.post(`/login`, usersController.login);
 
   }
 }
