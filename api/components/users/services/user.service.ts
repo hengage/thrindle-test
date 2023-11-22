@@ -1,4 +1,4 @@
-import { HandleException, STATUS_CODES } from "../../../utils";
+import { HandleException, STATUS_CODES, encryption } from "../../../utils";
 import { User } from "../models/users.models";
 import { ICreateuser, ILoginUser, IUser } from "../users.interface";
 
@@ -25,10 +25,21 @@ class UsersService {
             const user = await User.findOne({phoneNumber: payload.phoneNumber})
             .select('phoneNumber password')
             .lean()
+            .exec()
 
             if ( !user ) {
                 throw new HandleException(STATUS_CODES.NOT_FOUND, 'User not found')
             }
+            const passwordsMatch = await encryption.compareValues(
+                payload.password,
+                user.password
+              );
+              if (!passwordsMatch) {
+                throw new HandleException(
+                  STATUS_CODES.UNAUTHORIZED,
+                  "Incorrect password"
+                );
+              }
             return user
         } catch (error: any) {
             throw new HandleException(error.status, error.message)

@@ -21,21 +21,20 @@ class UsersController {
   }
 
   public async login(req: Request, res: Response) {
-    const {phoneNumber, password } = req.body
+    const { phoneNumber, password } = req.body;
     try {
-        const user = await usersService.login({phoneNumber, password})
-        res.status(STATUS_CODES.OK).json({
-            message: "Login successful",
-            data: {
-                _id: user._id,
-            }
-        })
+      const user = await usersService.login({ phoneNumber, password });
+      res.status(STATUS_CODES.OK).json({
+        message: "Login successful",
+        data: {
+          _id: user._id,
+        },
+      });
     } catch (error: any) {
-        res.status(error.status || STATUS_CODES.SERVER_ERROR)
-        .json({
-            message: "Login failed",
-            error: error.message
-        })
+      res.status(error.status || STATUS_CODES.SERVER_ERROR).json({
+        message: "Login failed",
+        error: error.message,
+      });
     }
   }
 }
