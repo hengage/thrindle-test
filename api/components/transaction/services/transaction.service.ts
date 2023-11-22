@@ -2,11 +2,28 @@ import axios from "axios";
 
 import { FLW_SECRET_KEY } from "../../../config";
 import { HandleException, stringUtils } from "../../../utils";
+import { Transaction } from "../models/transaction.models";
 
 class TransactionService {
   private transactionRef: Function;
   constructor() {
     this.transactionRef = () => stringUtils.generateTxRef(14);
+  }
+
+  public async recordTransaction(payload: any) {
+    try {
+      const transaction = new Transaction({
+        amount: payload.amount,
+        user: payload.user,
+        senderEmail: payload.senderEmail,
+        reference: payload.reference,
+        fee: payload.fee,
+      });
+
+      await transaction.save();
+    } catch (error: any) {
+      throw new HandleException(error.status, error.message);
+    }
   }
 
   public async oneTimeAccountPayment(email: string, amount: number) {
