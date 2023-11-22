@@ -24,9 +24,10 @@ class StringUtils {
     return jwt.sign(payload, `${JWT_SECRET_KEY}`, { expiresIn });
   }
 
-  public generateTxRef(): string {
+  public generateTxRef(length: number): string {
     const randomBytes = crypto.randomBytes(11);
-    const txRef = `${randomBytes}_${this.timestamp}`
+    const hexString = randomBytes.toString("hex").slice(0, length);
+    const txRef = `${hexString}_${this.timestamp.toString().substring(4)}`
     console.log({ txRef });
     
     return txRef;
