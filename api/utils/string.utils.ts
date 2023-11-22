@@ -28,7 +28,6 @@ class StringUtils {
     const randomBytes = crypto.randomBytes(11);
     const hexString = randomBytes.toString("hex").slice(0, length);
     const txRef = `${hexString}_${this.timestamp.toString().substring(4)}`
-    console.log({ txRef });
     
     return txRef;
   }
