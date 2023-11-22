@@ -55,22 +55,23 @@ class TransactionService {
       if (response.status === "success") {
         return response;
       }
-      throw new HandleException(STATUS_CODES.BAD_REQUEST, response.message)
+      throw new HandleException(STATUS_CODES.BAD_REQUEST, response.message);
     } catch (error: any) {
       throw new HandleException(error.status, error.message);
     }
   }
 
-  public async oneTimeAccountPayment(email: string, amount: number) {
+  public async oneTimeAccountPayment(email: string, amount: number, userId: string) {
     // Creates a dynamic account number which would expire after payment
     // has been confirmed or the period of time indicated.
+    const tx_ref = this.transactionRef();
     try {
       const response = await axios.post(
         "https://api.flutterwave.com/v3/virtual-account-numbers",
         {
           email,
           amount,
-          tx_ref: this.transactionRef(),
+          tx_ref,
           is_permanent: false,
           expires: 300,
           frequency: 3,
@@ -83,6 +84,12 @@ class TransactionService {
       );
 
       const virtualAccount = response.data.data;
+      this.recordTransaction({
+        amount,
+        senderEmail: email,
+        reference: tx_ref,
+        user: userId,
+      });
       return virtualAccount;
     } catch (error: any) {
       throw new HandleException(error.status, error.response.data.message);

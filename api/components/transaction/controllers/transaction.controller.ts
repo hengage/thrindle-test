@@ -30,7 +30,8 @@ class TransactionController {
       const dynamicVirtualAccount =
         await transactionService.oneTimeAccountPayment(
           user.email,
-          req.body.amount
+          req.body.amount,
+          user._id
         );
       res.status(STATUS_CODES.CREATED).json({
         message: "Account created",
