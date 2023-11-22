@@ -5,6 +5,24 @@ import { STATUS_CODES } from "../../../utils";
 import { usersService } from "../../users";
 
 class TransactionController {
+  public async bankAccountTransfer(req: Request, res: Response) {
+    // console.log({ body: req.body});
+    
+    try {
+      const response = await transactionService.bankAccountTransfer(req.body);
+      console.log({response, body: req.body})
+      res.status(STATUS_CODES.OK).json({
+        message: "Transfer initiated successfully",
+        data: response,
+      });
+    } catch (error: any) {
+      res.status(error.status || STATUS_CODES.SERVER_ERROR).json({
+        message: "Failed to initiate transfer",
+        error: error.message,
+      });
+    }
+  }
+
   public async oneTimeAccountPayment(req: Request, res: Response) {
     const { userId } = req.params;
     try {
@@ -36,7 +54,7 @@ class TransactionController {
       console.log({ error: error.message });
       res.status(500).end();
     }
-  }
+  };
 }
 
 export const transactionController = new TransactionController();

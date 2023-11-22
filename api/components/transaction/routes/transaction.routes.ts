@@ -13,8 +13,12 @@ class TransanctionRoutes {
 
   public initializeRoutes(): void {
     this.router
-      .route(`${this.path}:userId/bank-transfer`)
+      .route(`${this.path}:userId/dynamic-bank-transfer`)
       .post(transactionController.oneTimeAccountPayment);
+
+    this.router
+    .route(`${this.path}:userId/bank-account-transfer`)
+    .post(transactionController.bankAccountTransfer)
 
     this.router
       .route(`${this.path}webhook`)

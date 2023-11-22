@@ -26,6 +26,34 @@ class TransactionService {
     }
   }
 
+  public async bankAccountTransfer(payload: any) {
+    const { amount, bankCode, recipientAccountNumber, recipientName, narration } =
+      payload;
+    try {
+      const response = await axios.post(
+        "https://api.flutterwave.com/v3/transfers",
+        {
+          account_bank: bankCode,
+          account_number: recipientAccountNumber,
+          amount,
+          currency: "NGN",
+          // recipient: recipientName,
+          narration,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${FLW_SECRET_KEY}`,
+          },
+        }
+      );
+      console.log({response})
+      return response;
+    } catch (error: any) {
+      console.log({error: error.response})
+      throw new HandleException(error.status, error.response.data.message);
+    }
+  }
+
   public async oneTimeAccountPayment(email: string, amount: number) {
     // Creates a dynamic account number which would expire after payment
     // has been confirmed or the period of time indicated.
