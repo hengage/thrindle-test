@@ -17,5 +17,13 @@ class StringUtils {
   public generateJWT(payload: any, expiresIn: string): string {
     return jwt.sign(payload, `${JWT_SECRET_KEY}`, { expiresIn });
   }
+
+  public generateTxRef(): string {
+    const timestamp = DateTime.now().toUnixInteger();
+    const randomBytes = crypto.randomBytes(11);
+    const txRef = `${randomBytes}_${timestamp}`;
+    return txRef;
+  }
 }
+
 export const stringUtils = new StringUtils();
