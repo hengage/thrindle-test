@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { usersRoutes } from "./components/users";
+import { transanctionRoutes } from "./components/transaction";
 
 class Routes {
     /*
@@ -16,6 +17,7 @@ class Routes {
   
     private initializeRoutes() {
       this.router.use("/users", usersRoutes.router);
+      this.router.use("/transaction", transanctionRoutes.router);
     }
   }
 

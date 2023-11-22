@@ -1,15 +1,9 @@
 import axios from "axios";
-const Flutterwave = require("flutterwave-node-v3");
 
 import { FLW_PUBLIC_KEY, FLW_SECRET_KEY } from "../../../config";
-import { HandleException } from "../../../utils";
+import { HandleException, stringUtils } from "../../../utils";
 
 class TransactionService {
-  private flutterwave: any;
-
-  constructor() {
-    this.flutterwave = new Flutterwave(FLW_PUBLIC_KEY, FLW_SECRET_KEY);
-  }
 
   public async oneTimeAccountPayment(email: string, amount: number) {
     // Creates a dynamic account number which would expire after payment
@@ -20,7 +14,7 @@ class TransactionService {
       {
         email,
         amount,
-        tx_ref: "txRef",
+        tx_ref: stringUtils.generateTxRef,
         is_permanent: false,
         expires: 300,
         frequency: 3,
