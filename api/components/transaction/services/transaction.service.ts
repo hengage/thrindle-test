@@ -1,8 +1,14 @@
 import axios from "axios";
 
 import { FLW_SECRET_KEY } from "../../../config";
-import { HandleException, stringUtils } from "../../../utils";
+import { HandleException, STATUS_CODES, stringUtils } from "../../../utils";
 import { Transaction } from "../models/transaction.models";
+
+const Flutterwave = require("flutterwave-node-v3");
+const flw = new Flutterwave(
+  process.env.FLW_PUBLIC_KEY,
+  process.env.FLW_SECRET_KEY
+);
 
 class TransactionService {
   private transactionRef: Function;
@@ -27,30 +33,31 @@ class TransactionService {
   }
 
   public async bankAccountTransfer(payload: any) {
-    const { amount, bankCode, recipientAccountNumber, recipientName, narration } =
-      payload;
+    const {
+      amount,
+      bankCode,
+      recipientAccountNumber,
+      recipientName,
+      narration,
+    } = payload;
+
+    const details = {
+      account_bank: bankCode,
+      account_number: recipientAccountNumber,
+      amount,
+      currency: "NGN",
+      // recipient: recipientName,
+      narration,
+    };
     try {
-      const response = await axios.post(
-        "https://api.flutterwave.com/v3/transfers",
-        {
-          account_bank: bankCode,
-          account_number: recipientAccountNumber,
-          amount,
-          currency: "NGN",
-          // recipient: recipientName,
-          narration,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${FLW_SECRET_KEY}`,
-          },
-        }
-      );
-      console.log({response})
-      return response;
+      const response = await flw.Transfer.initiate(details);
+
+      if (response.status === "success") {
+        return response;
+      }
+      throw new HandleException(STATUS_CODES.BAD_REQUEST, response.message)
     } catch (error: any) {
-      console.log({error: error.response})
-      throw new HandleException(error.status, error.response.data.message);
+      throw new HandleException(error.status, error.message);
     }
   }
 

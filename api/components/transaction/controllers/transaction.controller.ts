@@ -10,7 +10,6 @@ class TransactionController {
     
     try {
       const response = await transactionService.bankAccountTransfer(req.body);
-      console.log({response, body: req.body})
       res.status(STATUS_CODES.OK).json({
         message: "Transfer initiated successfully",
         data: response,
