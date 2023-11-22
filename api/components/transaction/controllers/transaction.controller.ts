@@ -26,6 +26,17 @@ class TransactionController {
       });
     }
   }
+
+  public handleWebHookPayload = (req: Request, res: Response) => {
+    try {
+      const payload = req.body;
+      console.log({ payload: JSON.stringify(payload) });
+      res.status(200).end();
+    } catch (error: any) {
+      console.log({ error: error.message });
+      res.status(500).end();
+    }
+  }
 }
 
 export const transactionController = new TransactionController();
