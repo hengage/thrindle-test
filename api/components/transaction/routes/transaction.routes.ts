@@ -30,7 +30,7 @@ class TransanctionRoutes {
       .post(transactionController.bankAccountTransfer);
 
     this.router
-      .route(`${this.path}transaction-history`)
+      .route(`${this.path}history`)
       .get(transactionController.userTransactionHistory);
   }
 }
