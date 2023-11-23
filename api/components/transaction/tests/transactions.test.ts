@@ -29,7 +29,7 @@ describe('Transaction', () => {
     await mongoServer.stop();
   });
 
-  test('test Transaction model', async () => {
+  test('test document saves to db', async () => {
     const transactionData = new Transaction({
         amount: 3000,
         user: 'allison becker',
