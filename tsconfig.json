@@ -4,6 +4,7 @@
     "rootDir": "api",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "types": ["jest"], 
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */
