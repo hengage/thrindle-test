@@ -1,5 +1,7 @@
 # Thrindle-test
 
+[Postman documentation](https://documenter.getpostman.com/view/17261000/2s9YeBfDzi)
+
 ## Features
 - User authenticatiom -sign up, login
 - User authorization - middleware
