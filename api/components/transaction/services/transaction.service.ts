@@ -24,6 +24,7 @@ class TransactionService {
         recipientAccountNumber: payload.recipientAccountNumber,
         bankCode: payload.bankCode,
         bankName: payload.bankName,
+        type: "debit",
         reference: payload.reference,
         fee: payload.fee,
       });

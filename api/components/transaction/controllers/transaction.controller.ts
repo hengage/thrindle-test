@@ -22,7 +22,6 @@ class TransactionController {
         bankCode: bank_code,
         bankName: bank_name,
         reference: reference,
-        type: "debit",
         user: userId,
         fee: fee,
       });

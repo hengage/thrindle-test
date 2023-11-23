@@ -34,7 +34,10 @@ transactionSchema.statics.getTransactionHistory = async function (
     {
       $project: {
         _id: "$_id",
+        receiverAccountNumber: "$recipientAccountNumber",
         amount: "$amount",
+        bank: "$bankName",
+        type: "$type",
         reference: "$reference",
         date: "$createdAt",
         fee: "$fee"
