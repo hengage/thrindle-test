@@ -3,6 +3,7 @@ import axios from "axios";
 import { FLW_SECRET_KEY } from "../../../config";
 import { HandleException, STATUS_CODES, stringUtils } from "../../../utils";
 import { Transaction } from "../models/transaction.models";
+import { emitEvents } from "../../../services";
 
 const Flutterwave = require("flutterwave-node-v3");
 const flw = new Flutterwave(
@@ -84,12 +85,12 @@ class TransactionService {
       );
 
       const virtualAccount = response.data.data;
-      this.recordTransaction({
+      emitEvents('record-tranaction',{
         amount,
         senderEmail: email,
         reference: tx_ref,
         user: userId,
-      });
+      })
       return virtualAccount;
     } catch (error: any) {
       throw new HandleException(error.status, error.response.data.message);
