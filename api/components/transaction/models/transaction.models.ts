@@ -6,8 +6,10 @@ const transactionSchema = new Schema<ITransaction>(
   {
     _id: { type: String, default: () => stringUtils.generateUniqueString(4) },
     user: { type: String, required: true },
-    senderEmail: { type: String, required: true },
     amount: { type: Number, required: true },
+    recipientAccountNumber: { type: String, required: true },
+    bankCode: { type: String, required: true },
+    bankName: { type: String, required: true },
     reference: { type: String, default: "" },
     fee: { type: Number, default: 0 },
   },
@@ -32,7 +34,6 @@ transactionSchema.statics.getTransactionHistory = async function (
     {
       $project: {
         _id: "$_id",
-        senderEmail: "$senderEmail",
         amount: "$amount",
         reference: "$reference",
         date: "$createdAt",
