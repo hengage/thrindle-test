@@ -22,17 +22,15 @@ class TransanctionRoutes {
 
     this.router.use(authMiddleware.verifyToken)
     this.router
-      .route(`${this.path}:userId/dynamic-bank-transfer`)
+      .route(`${this.path}dynamic-bank-transfer`)
       .post(transactionController.oneTimeAccountPayment);
 
     this.router
-      .route(`${this.path}:userId/bank-account-transfer`)
+      .route(`${this.path}bank-account-transfer`)
       .post(transactionController.bankAccountTransfer);
 
-    
-
     this.router
-      .route(`${this.path}:userId/transaction-history`)
+      .route(`${this.path}transaction-history`)
       .get(transactionController.userTransactionHistory);
   }
 }

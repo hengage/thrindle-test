@@ -8,7 +8,7 @@ import { Transaction } from "../models/transaction.models";
 
 class TransactionController {
   public async bankAccountTransfer(req: Request, res: Response) {
-    // console.log({ body: req.body});
+    const userId = (req as any).user._id
 
     try {
       const response = await transactionService.bankAccountTransfer(req.body);
@@ -25,7 +25,8 @@ class TransactionController {
   }
 
   public async oneTimeAccountPayment(req: Request, res: Response) {
-    const { userId } = req.params;
+    // const { userId } = req.params;
+    const userId = (req as any).user._id
     try {
       validateTransaction.validateDynamicAccount(req.body);
       const user = await usersService.getUserById(userId, "email");
@@ -61,9 +62,10 @@ class TransactionController {
 
   public async userTransactionHistory(req: Request, res: Response) {
     const searchQuery = (req.query.filter as string)
+    const userId = (req as any).user._id
     try {
       const transactionHistory = await Transaction.getTransactionHistory(
-        req.params.userId,
+        userId,
         searchQuery
       );
       res.status(STATUS_CODES.OK).json({
