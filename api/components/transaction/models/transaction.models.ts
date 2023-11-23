@@ -9,7 +9,7 @@ const transactionSchema = new Schema<ITransaction>(
     senderEmail: { type: String, required: true },
     amount: { type: Number, required: true },
     reference: { type: String, default: "" },
-    fee: { type: Number, default: null },
+    fee: { type: Number, default: 0 },
   },
   { timestamps: { createdAt: true, updatedAt: false } }
 );
