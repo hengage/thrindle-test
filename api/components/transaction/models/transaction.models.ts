@@ -23,7 +23,7 @@ transactionSchema.statics.getTransactionHistory = async function (
 
   if (searchQuery) {
     matchStage.$or = [
-      { senderEmail: { $regex: new RegExp(searchQuery, 'i') } },
+      { receiverAccountNumber: { $regex: new RegExp(searchQuery, 'i') } },
       { reference: { $regex: new RegExp(searchQuery, 'i') } },
     ];
   }

@@ -14,5 +14,8 @@ export interface ITransaction extends Document {
 }
 
 export interface TransactionMethods extends Model<ITransaction> {
-  getTransactionHistory(userId: string, searchQuery?: string): Promise<ITransaction>; // Change the balance field type to Big
+  getTransactionHistory(
+    userId: string,
+    searchQuery?: string
+  ): Promise<ITransaction[]>; // Change the balance field type to Big
 }

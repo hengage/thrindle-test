@@ -82,6 +82,14 @@ class TransactionController {
         userId,
         searchQuery
       );
+      
+      if (transactionHistory.length <= 0) {
+        return res.status(STATUS_CODES.OK).json({
+          message: "No transaction found",
+         
+        });
+      }
+        
       res.status(STATUS_CODES.OK).json({
         message: "Transaction history",
         data: transactionHistory,
