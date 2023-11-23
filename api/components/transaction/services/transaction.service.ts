@@ -38,7 +38,6 @@ class TransactionService {
       amount,
       bankCode,
       recipientAccountNumber,
-      recipientName,
       narration,
     } = payload;
 
@@ -47,11 +46,11 @@ class TransactionService {
       account_number: recipientAccountNumber,
       amount,
       currency: "NGN",
-      // recipient: recipientName,
       narration,
     };
     try {
       const response = await flw.Transfer.initiate(details);
+      console.log({response})
 
       if (response.status === "success") {
         return response;
