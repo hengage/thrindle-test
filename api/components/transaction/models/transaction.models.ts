@@ -22,7 +22,7 @@ transactionSchema.statics.getTransactionHistory = async function (
     { $sort: { createdAt: -1 } },
     {
       $project: {
-        _id: 0,
+        _id: "$_id",
         senderEmail: "$senderEmail",
         amount: "$amount",
         reference: "$reference",
