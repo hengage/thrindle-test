@@ -17,8 +17,8 @@ class TransanctionRoutes {
       .post(transactionController.oneTimeAccountPayment);
 
     this.router
-    .route(`${this.path}:userId/bank-account-transfer`)
-    .post(transactionController.bankAccountTransfer)
+      .route(`${this.path}:userId/bank-account-transfer`)
+      .post(transactionController.bankAccountTransfer);
 
     this.router
       .route(`${this.path}webhook`)
@@ -26,6 +26,10 @@ class TransanctionRoutes {
         validateTransaction.validateSignature,
         transactionController.handleWebHookPayload
       );
+
+    this.router
+      .route(`${this.path}:userId/transaction-history`)
+      .get(transactionController.userTransactionHistory);
   }
 }
 
