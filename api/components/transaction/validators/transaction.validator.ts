@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { STATUS_CODES } from "../../../utils";
+import joi from "joi";
+
+import { HandleException, STATUS_CODES } from "../../../utils";
 import { FLW_SECRET_HASH } from "../../../config";
 
 class ValidateTransaction {
@@ -23,6 +25,22 @@ class ValidateTransaction {
       res.status(STATUS_CODES.SERVER_ERROR).end();
     }
   }
+
+  public async  validateDynamicAccount  (payload: any) {
+    const loginSchema = joi.object({
+      amount: joi.number().required(),
+    });
+
+    const { error } = loginSchema.validate(payload, {
+      abortEarly: false,
+      stripUnknown: true,
+    });
+
+    if (error) {
+      throw new HandleException(STATUS_CODES.BAD_REQUEST, error.message);
+    }
+    return;
+  };
 }
 
 export const validateTransaction = new ValidateTransaction();

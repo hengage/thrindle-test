@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import { usersService } from "../services/user.service";
 import { STATUS_CODES, stringUtils } from "../../../utils";
+import { validateUsers } from "../validators/users.validator";
 
 class UsersController {
   public async signup(req: Request, res: Response) {
     try {
-      usersService.checkPhoneNumberIsTaken(req.body.phoneNumber);
-      usersService.checkEmailIsTaken(req.body.email);
+      await validateUsers.validateSignUp(req.body)
+      await usersService.checkPhoneNumberIsTaken(req.body.phoneNumber);
+      await usersService.checkEmailIsTaken(req.body.email);
       const user = await usersService.signup(req.body);
 
       const jwtPayload = {
@@ -33,6 +35,7 @@ class UsersController {
   public async login(req: Request, res: Response) {
     const { phoneNumber, password } = req.body;
     try {
+      await validateUsers.validateLogin(req.body)
       const user = await usersService.login({ phoneNumber, password });
 
       const jwtPayload = {

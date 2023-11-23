@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { transactionService } from "../services/transaction.service";
 import { STATUS_CODES } from "../../../utils";
 import { usersService } from "../../users";
+import { validateTransaction } from "../validators/transaction.validator";
 
 class TransactionController {
   public async bankAccountTransfer(req: Request, res: Response) {
@@ -25,6 +26,7 @@ class TransactionController {
   public async oneTimeAccountPayment(req: Request, res: Response) {
     const { userId } = req.params;
     try {
+      validateTransaction.validateDynamicAccount(req.body)
       const user = await usersService.getUserById(userId, "email");
 
       const dynamicVirtualAccount =
