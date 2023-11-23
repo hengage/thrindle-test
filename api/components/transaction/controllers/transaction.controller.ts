@@ -60,9 +60,11 @@ class TransactionController {
   };
 
   public async userTransactionHistory(req: Request, res: Response) {
+    const searchQuery = (req.query.filter as string)
     try {
       const transactionHistory = await Transaction.getTransactionHistory(
-        req.params.userId
+        req.params.userId,
+        searchQuery
       );
       res.status(STATUS_CODES.OK).json({
         message: "Transaction history",

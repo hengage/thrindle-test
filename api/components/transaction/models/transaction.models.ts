@@ -15,10 +15,19 @@ const transactionSchema = new Schema<ITransaction>(
 );
 
 transactionSchema.statics.getTransactionHistory = async function (
-  userId: string
+  userId: string, searchQuery?: string
 ): Promise<ITransaction[]> {
+  const matchStage: any = { user: userId };
+
+  if (searchQuery) {
+    matchStage.$or = [
+      { senderEmail: { $regex: new RegExp(searchQuery, 'i') } },
+      { reference: { $regex: new RegExp(searchQuery, 'i') } },
+    ];
+  }
+
   const result = await this.aggregate([
-    { $match: { user: userId } },
+    { $match: matchStage },
     { $sort: { createdAt: -1 } },
     {
       $project: {
